@@ -13,3 +13,21 @@ provider "aws" {
   region  = "ap-northeast-1"
   profile = "KR-CLI-IAM"
 }
+
+resource "aws_s3_bucket" "practice" {
+  bucket = var.bucket_name
+
+  tags = {
+    Project     = "project-4-terraform-iac"
+    Environment = "learning"
+    ManagedBy   = "terraform"
+  }
+}
+
+resource "aws_s3_bucket_versioning" "practice" {
+  bucket = aws_s3_bucket.practice.id
+
+  versioning_configuration {
+    status = "Enabled"
+  }
+}
